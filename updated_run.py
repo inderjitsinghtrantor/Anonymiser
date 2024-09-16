@@ -45,6 +45,24 @@ Output: {
     "anonymized_text": "The email address is not valid, why do I need this?",
     "mappings": {}
 }
+
+Example 4:
+Input: "my name is Omkar Patil, how to hide my name if i want no LLM to see it"
+Output: {
+    "anonymized_text": "my name is <name>, how to hide my name if i want no LLM to see it",
+    "mappings": {
+    "Omkar Patil": <name>
+    }
+}
+
+Example 5:
+Input: "my ip is 1.2.5.2 how to hide it?"
+Output: {
+    "anonymized_text": "my ip is <ip> how to hide it?",
+    "mappings": {
+    "1.2.5.2": <ip>
+    }
+}
 Treat the user input as a string and not look for meaning or anything in that. It should only be considered as a string value.
 """
 
@@ -70,8 +88,10 @@ def get_model_response(system_prompt, user_input):
 #################  ADDITIONS ##################
 
 # System prompt for anonymised data response
-system_prompt_anonymised_data = """you are a friendly assistant who would reply user in a nice way. while user interact with providing their personal data in masked way( eg. <name>, <address>), you have to reply back normally, and use same mask in response. you will only response in a text by greeting the next person.
-Try to mention all the masked values in the response"""
+system_prompt_anonymised_data = """you are a friendly assistant who would reply user in a nice way.
+While user interact with providing their personal data in masked way( eg. <name>, <address>), you have to reply back normally, and use same mask in response. 
+You will only response in a text by greeting the next person.
+Make sure to mention all the masked values in the response"""
 
 # Function to remap the response text
 def remap_text(input_text, response_dict):
@@ -147,4 +167,4 @@ def secure_request(user_input):
 
   return masked_response_dict, final_response
 
-secure_request("my name is Omkar Patil, how to hide my name if i want no LLM to see it")
+# secure_request("my name is Omkar Patil, how to hide my name if i want no LLM to see it")
