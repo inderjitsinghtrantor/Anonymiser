@@ -1,8 +1,10 @@
-import requests, json
+import requests, json, os
+from dotenv import load_dotenv
 
+load_dotenv()
 # Define the URL of your hosted model
-API_URL = "http://34.30.48.105:8500/v1/chat/completions"
-AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+API_URL = os.getenv("API_URL")
+AUTH_TOKEN = os.getenv("AUTH_TOKEN")
 
 # Define the system prompt
 system_prompt = """
@@ -85,30 +87,30 @@ def remap_text(input_text, response_dict):
 
 ######################## USING THE FUNCTIONS AND LOGIC ###################################################
 
-# Example user input
-# user_input = "John Doe lives at 1234 Elm St, Springfield, IL 62704. His email is john.doe@example.com and his IP address is 192.168.1.1."
-# user_input = """Hello my name is Rishab Pant, i live at B15/402, Mumbai Chakala, near airport road, 400301.
-#               I have a friend named Khwaish, who's friend Palak has email id palak.paneer@cook.com. 
-#               What do you think should i send an email from my email id Rishab.cricketer@crick.com?
-#               """
-user_input = "John Doe lives at 1234 Elm St, Springfield, IL 62704. His email is john.doe@example.com and his IP address is 192.168.1.1. and my name is Monaka with ip 194.152.2.1"
+# # Example user input
+# # user_input = "John Doe lives at 1234 Elm St, Springfield, IL 62704. His email is john.doe@example.com and his IP address is 192.168.1.1."
+# # user_input = """Hello my name is Rishab Pant, i live at B15/402, Mumbai Chakala, near airport road, 400301.
+# #               I have a friend named Khwaish, who's friend Palak has email id palak.paneer@cook.com. 
+# #               What do you think should i send an email from my email id Rishab.cricketer@crick.com?
+# #               """
+# user_input = "John Doe lives at 1234 Elm St, Springfield, IL 62704. His email is john.doe@example.com and his IP address is 192.168.1.1. and my name is Monaka with ip 194.152.2.1"
 
-# Call the model and mask the data
-masked_response = get_model_response(system_prompt, user_input)
+# # Call the model and mask the data
+# masked_response = get_model_response(system_prompt, user_input)
 
-# get the response in json
-masked_response_dict = json.loads(masked_response['choices'][0]['message']['content'])
-print("############# INTERMEDIETE RESPONSE ###################")
-print(masked_response_dict)
-print("########################################################")
-# Get the response from Chat GPT (Same Llama 3 endpoint)
-anonymised_response = get_model_response(system_prompt_anonymised_data, masked_response_dict['anonymized_text'])
-anonymised_response = anonymised_response['choices'][0]['message']['content']
+# # get the response in json
+# masked_response_dict = json.loads(masked_response['choices'][0]['message']['content'])
+# print("############# INTERMEDIETE RESPONSE ###################")
+# print(masked_response_dict)
+# print("########################################################")
+# # Get the response from Chat GPT (Same Llama 3 endpoint)
+# anonymised_response = get_model_response(system_prompt_anonymised_data, masked_response_dict['anonymized_text'])
+# anonymised_response = anonymised_response['choices'][0]['message']['content']
 
-# Unmasking
-print("############# FINAL RESPONSE ###################")
-print(remap_text(anonymised_response, masked_response_dict))
-print("########################################################")
+# # Unmasking
+# print("############# FINAL RESPONSE ###################")
+# print(remap_text(anonymised_response, masked_response_dict))
+# print("########################################################")
 
 
 ########################################################################################################################
@@ -132,4 +134,4 @@ def secure_request(user_input):
   print(final_response)
   print("########################################################")
 
-  return masked_response, final_response
+  return masked_response_dict, final_response
