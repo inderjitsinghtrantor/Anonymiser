@@ -39,6 +39,7 @@ if prompt := st.chat_input("What is your question?"):
     # Get bot response
     # response = get_bot_response(prompt)  # TODO use your function
     masked_response_dict, response = urun.secure_request(prompt)
+    print(f"##### masked response dict: {masked_response_dict}\nresponse: {response}")
 
     # Display JSON response
     with st.expander("View Intermediate JSON"):
