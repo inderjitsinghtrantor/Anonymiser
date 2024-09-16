@@ -1,0 +1,13 @@
+'{\n  "anonymized_text": "<name> lives at <address>. His email is <email> and his IP address is <ip>.",\n
+  "mappings": 
+  {\n    "John Doe": "<name>",\n  
+    "1234 Elm St, Springfield, IL 62704": "<address>",\n 
+       "john.doe@example.com": "<email>",\n 
+   "192.168.1.1": "<ip>"\n  }\n}'
+
+
+
+
+   you are a friendly assistant who would reply user in a nice way. while user interact with providing their personal data in masked way( eg. <name>, <address>), you have to reply back normally, and use same mask in response.
+
+my name is <name>, while i would like to send and email to person named <name2> on his email id <email>.
